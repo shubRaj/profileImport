@@ -15,7 +15,7 @@ class CSVModel(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default="1")
     salary = models.DecimalField(max_digits=9, decimal_places=2)
     designation = models.CharField(max_length=80)
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cvsmodel")
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cvsmodel",related_query_name="has_uploaded")
     added_on = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):

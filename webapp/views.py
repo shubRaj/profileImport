@@ -1,5 +1,6 @@
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect,render
+from django.shortcuts import redirect
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic import ListView,View
 from .models import CSVModel
@@ -25,9 +26,20 @@ class Home(LoginRequiredMixin, ListView):
     context_object_name = "csvs"
     paginate_by = 20
     def get_queryset(self):
-        return CSVModel.objects.all()
+        uploader = self.request.GET.get("filter-by-uploader")
+        order = self.request.GET.get("order-by")
+        objs =  CSVModel.objects.all()
+        if uploader:
+            objs = objs.filter(added_by__username=uploader)
+        if order and order.lower() in ("asc","desc"):
+            if order.lower() == "desc":
+                objs = objs.order_by("added_on")
+        return objs
+        
     def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        context["users"] = User.objects.all()
+        return context
     def post(self, request, *args, **kwargs):
         form = CSVForm(request.POST, request.FILES)
         if form.is_valid():
@@ -52,7 +64,10 @@ class Home(LoginRequiredMixin, ListView):
 class Export(View):
     def post(self,request,*args,**kwargs):
         ids = [int(id) for id in request.POST.keys() if id.isnumeric()]
-        objs = CSVModel.objects.filter(id__in=ids).values_list("full_name","gender","salary","designation","added_by__username","added_on__date")
+        if ids:
+            objs = CSVModel.objects.filter(id__in=ids).values_list("full_name","gender","salary","designation","added_by__username","added_on__date")
+        else:
+            objs = CSVModel.objects.all().values_list("full_name","gender","salary","designation","added_by__username","added_on__date")
         if request.POST.get("type") == "xls":
             response = HttpResponse(content_type="text/ms-excel")
             response["Content-Disposition"]="attachment; filename=modelcsv.xls"
