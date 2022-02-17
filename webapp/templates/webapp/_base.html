@@ -6,7 +6,6 @@
         <meta name="description" content="">
         <meta name="author"
               content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-        <meta name="generator" content="Hugo 0.88.1">
         <title>
             {% block title %}
             {% endblock title %}
@@ -35,6 +34,8 @@
               color="#7952b3">
         <link rel="icon"
               href="https://getbootstrap.com/docs/5.1/assets/img/favicons/favicon.ico">
+        {% block head %}
+        {% endblock head %}
         <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -50,8 +51,6 @@
         }
       }
         </style>
-        {% block head %}
-        {% endblock head %}
     </head>
     {% block body %}
     {% endblock body %}
