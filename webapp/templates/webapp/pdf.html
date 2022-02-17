@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSVModel PDF</title>
+    <style>
+        @page {
+            size: "A4";
+            margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+
+            @top-center {
+                content: "CSVModel"
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table class="table">
+        <thead class="thread">
+            <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Gender</th>
+                <th>Salary</th>
+                <th>Designation</th>
+                <th>Added By</th>
+                <th>Added On</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for csv in csvs %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{csv.0}}</td>
+                <td>{{csv.1}}</td>
+                <td>{{csv.2}}</td>
+                <td>{{csv.3}}</td>
+                <td>{{csv.4}}</td>
+                <td>{{csv.5}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</body>
+
+</html>

@@ -10,6 +10,9 @@ psycopg2 = "*"
 pandas = "*"
 djangorestframework = "*"
 openpyxl = "*"
+reportlab = "*"
+xlwt = "*"
+weasyprint = "*"
 
 [dev-packages]
 

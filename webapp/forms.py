@@ -12,4 +12,3 @@ class CSVModelForm(forms.ModelForm):
     class Meta:
         model = CSVModel
         exclude = ("id","added_by","added_on")
-        
