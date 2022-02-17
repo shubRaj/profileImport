@@ -68,12 +68,10 @@ Profile Importer
                             data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu">
-                            {% for user in users %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'app_webapp:home' %}?order-by=asc">Ascending</a>
                                 <a class="dropdown-item" href="{% url 'app_webapp:home' %}?order-by=desc">Descending</a>
                             </li>
-                            {% endfor %}
                         </ul>
                     </div>
                 </div>

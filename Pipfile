@@ -13,6 +13,7 @@ openpyxl = "*"
 reportlab = "*"
 xlwt = "*"
 weasyprint = "*"
+gunicorn = "*"
 
 [dev-packages]
 
