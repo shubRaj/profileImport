@@ -9,7 +9,6 @@ from .extractors import getFromCSV, getFromXLS
 
 class Login(UserPassesTestMixin, LoginView):
     template_name = "webapp/login.html"
-
     def test_func(self):
         return not self.request.user.is_authenticated
 
@@ -20,10 +19,11 @@ class Login(UserPassesTestMixin, LoginView):
 class Home(LoginRequiredMixin, ListView):
     template_name = "webapp/home.html"
     context_object_name = "csvs"
-
+    paginate_by = 20
     def get_queryset(self):
         return CSVModel.objects.all()
-
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
     def post(self, request, *args, **kwargs):
         form = CSVForm(request.POST, request.FILES)
         if form.is_valid():
@@ -37,7 +37,7 @@ class Home(LoginRequiredMixin, ListView):
                     if csvForm.is_valid():
                         csv_instance = csvForm.save(commit=False)
                         csv_instance.added_by = self.request.user
-                        # csv_instance.save()
+                        csv_instance.save()
                 else:
                     skipped.append(i)
             if skipped:
