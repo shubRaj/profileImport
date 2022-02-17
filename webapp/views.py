@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from django.views.generic import ListView,View
 from .models import CSVModel
 from .forms import CSVForm,CSVModelForm
@@ -100,5 +101,8 @@ class Export(View):
             output = open(output.name,"rb")
             response.write(output.read())
         return response
-class Logout(LoginRequiredMixin, LogoutView):
-    pass
+class Logout(LoginRequiredMixin,LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        messages.success(request, 'Successfully Logout',fail_silently=True)
+        return response

@@ -9,6 +9,7 @@ Login
 
 <body class="text-center">
     <main class="form-signin">
+        {% include 'webapp/message.html' with messages=messages only %}
         <form method="POST" action="{% url 'app_webapp:login' %}">
             {% csrf_token %}
             <img class="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72"
