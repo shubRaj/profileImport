@@ -2,6 +2,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView,View
 from .models import CSVModel
 from .forms import CSVForm,CSVModelForm
@@ -12,14 +13,14 @@ import xlwt
 from weasyprint import HTML
 from django.template.loader import render_to_string
 import tempfile
-class Login(UserPassesTestMixin, LoginView):
+class Login(UserPassesTestMixin,SuccessMessageMixin, LoginView):
     template_name = "webapp/login.html"
+    success_message = "Login successful"
     def test_func(self):
         return not self.request.user.is_authenticated
 
     def handle_no_permission(self):
         return redirect("app_webapp:home")
-
 
 class Home(LoginRequiredMixin, ListView):
     template_name = "webapp/home.html"
