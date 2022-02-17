@@ -20,8 +20,9 @@
             <main class="px-3">
                 <div>
                     <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <label for="formFileLg" class="form-label">Upload CSV/Excel</label>
-                        <input class="form-control form-control-lg" id="formFileLg" type="file" onchange="form.submit()">
+                        <input class="form-control form-control-lg" id="formFileLg" type="file" name="csvfile" onchange="form.submit()">
                     </form>
                 </div>
             </main>

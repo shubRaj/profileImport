@@ -14,7 +14,7 @@ class CSVModel(models.Model):
     date_of_birth = models.DateField(validators=(validate_DOB,),help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default="1")
     salary = models.DecimalField(max_digits=9, decimal_places=2)
-    Designation = models.CharField(max_length=30)
+    designation = models.CharField(max_length=80)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cvsmodel")
     added_on = models.DateTimeField(default=timezone.now, editable=False)
 
