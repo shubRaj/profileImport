@@ -25,6 +25,7 @@
                         onchange="form.submit()">
                 </form>
             </div>
+            {% if page_obj %}
             <form method="POST" action="{% url 'app_webapp:export' %}">
                 {% csrf_token %}
                 <div class="p-0">
@@ -91,6 +92,7 @@
                     {% include 'webapp/pagination.html' with page_obj=page_obj only %}
                 </div>
             </form>
+            {% endif %}
         </div>
     </div>
 </body>
