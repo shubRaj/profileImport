@@ -125,7 +125,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 LOGIN_URL = "app_webapp:login"
 LOGIN_REDIRECT_URL = "app_webapp:home"
-# LOGOUT_URL = 
+LOGOUT_REDIRECT_URL = "app_webapp:login"
+LOGOUT_URL = "app_webapp:logout"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
