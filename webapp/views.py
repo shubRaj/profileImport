@@ -1,6 +1,10 @@
 from django.contrib.auth.views import LoginView,TemplateView
-from django.contrib.auth.mixins import UserPassesTestMixin
-class Login(LoginView):
+from django.shortcuts import redirect
+from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
+class Login(UserPassesTestMixin,LoginView):
     template_name = "webapp/login.html"
-class Home(TemplateView):
+    def test_func(self):
+        if self.request.user.is_authenticated:
+            return redirect("app_webapp:home")
+class Home(LoginRequiredMixin,TemplateView):
     template_name = "webapp/home.html"
