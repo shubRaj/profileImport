@@ -1,4 +1,3 @@
-import encodings
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect,render
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
