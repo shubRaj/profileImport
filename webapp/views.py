@@ -44,6 +44,7 @@ class Home(LoginRequiredMixin, ListView):
         return context
     def post(self, request, *args, **kwargs):
         form = CSVForm(request.POST, request.FILES)
+        errors = {}
         if form.is_valid():
             csvFile = form.cleaned_data["csvfile"]
             csvPath = csvFile.temporary_file_path()
@@ -56,12 +57,19 @@ class Home(LoginRequiredMixin, ListView):
                         csv_instance = csvForm.save(commit=False)
                         csv_instance.added_by = self.request.user
                         csv_instance.save()
+                    else:
+                        for key,value in csvForm.errors.items():
+                            if errors.get(key):
+                                errors[key]["counter"]+=1
+                            else:
+                                errors[key] = {"counter":0,"error":value[0]}
                 else:
                     skipped.append(i)
             if skipped:
                 form.add_error("__all__",f"{len(skipped)} rows {skipped} were skipped since they did not have data")
-            kwargs.update({"form":form})
-        return super().get(request, *args, **kwargs)
+        resp = super().get(request, *args, **kwargs)
+        resp.context_data.update({"form":form,"errors":errors})
+        return resp
 
 class Export(View):
     def post(self,request,*args,**kwargs):

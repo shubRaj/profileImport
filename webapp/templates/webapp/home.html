@@ -17,8 +17,23 @@
             </div>
         </header>
         <div class="d-grid gap-3">
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+            {% endfor %}
+            {% for field,value in errors.items %}
+                <div class="alert alert-danger" role="alert">
+                    {{value.counter}} invalid {{field}} field: {{value.error}}
+                </div>
+            {% endfor %}
             <div class="p-2">
                 <form method="POST" enctype="multipart/form-data">
+                    {% for error in form.csvfile.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{error}}
+                    </div>
+                    {% endfor %}
                     {% csrf_token %}
                     <label for="formFileLg" class="form-label">Upload CSV/Excel</label>
                     <input class="form-control form-control-lg" id="formFileLg" type="file" name="csvfile"

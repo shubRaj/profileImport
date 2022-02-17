@@ -20,6 +20,16 @@ Login
                 {{error}}
             </div>
             {% endfor %}
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+            {% endfor %}
+            {% for error in form.username.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+            {% endfor %}
             <div class="form-floating">
                 <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
                     name="username">
